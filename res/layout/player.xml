@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:orientation="horizontal">
+
+    <!--
+     the double FrameLayout is necessary here to do cropping on the bottom right
+     (which requires the surface not be centered), while keeping the result centered
+    -->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:fitsSystemWindows="true" >
+
+        <FrameLayout
+            android:id="@+id/player_surface_frame"
+            android:layout_width= "fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:foregroundGravity="clip_horizontal|clip_vertical" >
+
+            <SurfaceView
+                android:id="@+id/player_surface"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+       	<!-- PaintView draw a circle when touch screen  --> 
+
+            <SurfaceView
+                android:id="@+id/drawView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <SurfaceView
+                android:id="@+id/subtitles_surface"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:visibility="invisible" /> 
+
+			</FrameLayout>
+
+	 </FrameLayout>
+
+        <RelativeLayout
+            android:id="@+id/linear2"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/transparent"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/edit_say_something"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/btn_send_message"
+                android:hint="say something..."
+                android:imeOptions="actionSend"
+                android:inputType="textAutoCorrect" />
+
+            <Button
+                android:id="@+id/btn_send_message"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentRight="true"
+                android:text="send" />
+        </RelativeLayout>
+
+    
+
+</RelativeLayout>

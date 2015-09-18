@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+	<ListView
+	    android:id="@+id/sidelist"
+	    android:layout_height="match_parent"
+	    android:dividerHeight="0.2dp"
+	    android:layout_width="208dp"
+	    android:layout_gravity="start"
+	    android:cacheColorHint="#0000"
+	    android:fastScrollEnabled="true">
+	</ListView>
+</merge>
