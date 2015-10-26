@@ -28,6 +28,7 @@
 
     <color name="grey1">#393939</color>
     <color name="grey2">#d0d0d0</color>
+    <color name="grey3">#d1d1d1</color>
     
         <color name="divider_color">#FFCCCCCC</color>
     <color name="headlayout_color">#019fde</color>

@@ -351,7 +351,8 @@ public class MultiRoom {
 		final EditText input = new EditText(context);
 
 		input.setHint("tag some annotation...");
-		tagDialog.setTitle(R.string.TAG_title).setView(input);
+//		tagDialog.setTitle(R.string.TAG_title).setView(input);
+		tagDialog.setView(input);
 		
 		tagDialog.setPositiveButton(R.string.TAG_send,
 			new DialogInterface.OnClickListener() {
