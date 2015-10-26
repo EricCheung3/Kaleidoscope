@@ -599,7 +599,7 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 		int h = faActivity.getWindowManager().getDefaultDisplay().getHeight();
 		int w = faActivity.getWindowManager().getDefaultDisplay().getWidth();
 
-		popFriends = new PopupWindow(v, w - 10, (int) (((2.8) * h) / 4));
+		popFriends = new PopupWindow(v, w - 10, (int) (((3.52) * h) / 4));
 		popFriends.setAnimationStyle(R.style.MyDialogStyleBottom);
 		popFriends.setFocusable(true);
 		popFriends.setBackgroundDrawable(new BitmapDrawable());

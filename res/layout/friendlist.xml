@@ -4,31 +4,49 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ListView
-        android:id="@+id/friendlist"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:gravity="center_horizontal" >
 
-        <Button
-            android:id="@+id/btn_play"
-            android:layout_width="90dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="Send" />
+        <ListView
+            android:id="@+id/friendlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/line"
+            android:layout_alignParentTop="true"
+            android:background="@color/grey3" />
 
-        <Button
-            android:id="@+id/btn_send_cancel"
-            android:layout_width="90dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="Cancel" />
+        <View
+            android:id="@+id/line"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/rl1"
+            android:background="@color/black" />
+
+        <RelativeLayout
+            android:id="@+id/rl1"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/grey2"
+            android:gravity="center_horizontal" >
+
+            <Button
+                android:id="@+id/btn_play"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="Send" />
+
+            <Button
+                android:id="@+id/btn_send_cancel"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:text="Cancel" />
+        </RelativeLayout>
     </RelativeLayout>
 
 </LinearLayout>

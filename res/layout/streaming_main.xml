@@ -5,6 +5,39 @@
     android:layout_gravity="center"
     android:orientation="vertical" >
 
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/grey2"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btnOptions"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/settings" />
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/icon" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/btnOptions"
+            android:layout_centerHorizontal="true"
+            android:text="Kaleidoscope"
+            android:textSize="32sp" />
+    </RelativeLayout>
     <!--  -->
 
     <RelativeLayout
@@ -20,18 +53,12 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/linear2" />
 
-<!--		
-        <easydarwin.android.videostreaming.PaintView
-            android:id="@+id/drawView"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            />
--->
+
         <android.view.SurfaceView
             android:id="@+id/drawView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />        
+            android:layout_height="match_parent" />
+
         <TextView
             android:id="@+id/timeDisplay"
             android:layout_width="wrap_content"
@@ -49,16 +76,8 @@
             android:layout_centerHorizontal="true"
             android:singleLine="true"
             android:text=""
-            android:textColor="#ff00ff" />
+            android:textColor="#0000FF" />
 
-        <Button
-            android:id="@+id/btnOptions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignTop="@+id/btnPlay"
-            android:background="@drawable/settings"
-            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btnPlay"
@@ -67,52 +86,33 @@
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:background="@drawable/play" />
-<!-- 
-        <Button
-            android:id="@+id/btnStop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/btnPlay"
-            android:text="stop" />
- -->            
-        <!--
-        <WebView
-            android:id="@+id/webview"
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:layout_below="@+id/btnPlay" />
-        -->
-
-
+　
 
         <RelativeLayout
             android:id="@+id/linear2"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
-            android:background="@android:color/transparent"
+            android:background="@color/grey2"
             android:orientation="vertical" >
 
             <EditText
                 android:id="@+id/edit_say_something"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/btn_send_message"
-                android:hint="say something..."
                 android:imeOptions="actionSend"
                 android:inputType="textAutoCorrect" />
 
             <Button
                 android:id="@+id/btn_send_message"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="50dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:text="send" />
-
         </RelativeLayout>
     </RelativeLayout>
 
