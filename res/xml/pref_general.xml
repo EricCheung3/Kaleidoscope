@@ -33,7 +33,7 @@
             android:title="@string/settings3" />
 
         <ListPreference
-            android:defaultValue="3"
+            android:defaultValue="5"
             android:entries="@array/audioEncoderArray"
             android:entryValues="@array/audioEncoderValues"
             android:key="p_audio_encoder"

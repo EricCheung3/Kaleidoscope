@@ -47,7 +47,7 @@ public class AMRNBStream extends AudioStream {
 		
 		try {
 			// RAW_AMR was deprecated in API level 16.
-			Field deprecatedName = MediaRecorder.OutputFormat.class.getField("RAW_AMR");
+			Field deprecatedName = MediaRecorder.OutputFormat.class.getField("AMR_NB");
 			setOutputFormat(deprecatedName.getInt(null));
 		} catch (Exception e) {
 			setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);

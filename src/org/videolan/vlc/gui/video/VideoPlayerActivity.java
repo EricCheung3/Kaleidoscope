@@ -126,7 +126,6 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import easydarwin.android.videostreaming.MultiRoom;
-import easydarwin.android.videostreaming.MultiRoom.MyAsyncTask;
 import easydarwin.android.videostreaming.VideoStreamingFragment;
 
 @SuppressLint("ClickableViewAccessibility")
@@ -595,7 +594,6 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
 						// notification or chat...	
 						if(msg.contains("PaintView")){
 							String[] coordination = msg.split(",");
-							//Toast.makeText(getApplicationContext(),fromName[1]+ ": (" + coordination[1]+","+coordination[2]+")", Toast.LENGTH_SHORT).show();
 							/** REDRAW CIRCLE according to the Coordinate*/ //(not test now)
 							/**Bug3[solved 1] Sender-->Receiver
 							 * change the coordinate according to the video size and surface size!
@@ -604,12 +602,17 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
 							// there's an 90 degree anti-clockwise rotation of the video,
 							// so switch x and y coordinate
 							// (x,y)-->(y,videoWidthX-x)
-							paintThread.setBubble(Float.parseFloat(coordination[2])*mVideoHeight/mSurface.getHeight(), mVideoWidth - Float.parseFloat(coordination[1])*mVideoWidth/mSurface.getWidth());
+							//X,Y means screen Width:mSurface.getWidth() and Length:mSurface.getHeight()
+							//newX = y*X/Y
+							//newY = (X^2+Y^2-2*X*x)/(2*Y)
+							float newX = Float.parseFloat(coordination[2])*mSurface.getWidth()/mSurface.getHeight();
+							float newY = (mSurface.getWidth()*mSurface.getWidth()+ mSurface.getHeight()*mSurface.getHeight()
+									- 2*mSurface.getWidth()*Float.parseFloat(coordination[1]))/(2*mSurface.getHeight());
+							paintThread.setBubble(newX, newY);
+							
+//							paintThread.setBubble(Float.parseFloat(coordination[2])*mVideoHeight/mSurface.getHeight(), mVideoWidth - Float.parseFloat(coordination[1])*mVideoWidth/mSurface.getWidth());
 							Log.i("VideoPlayerActivity--REDRAW--video", (Float.parseFloat(coordination[1])*mVideoWidth/mSurface.getWidth())+","+coordination[2]);
-//							Log.i("VideoPlayerActivity--REDRAW--surface", coordination[1]+","+coordination[2]);
-							/**new test for landscape of screen 
-							paintThread.setBubble(Float.parseFloat(coordination[1]), Float.parseFloat(coordination[2]));
-							*/
+
 						}else
 							Toast.makeText(getApplicationContext(),fromName[1]+ ": " + msg, Toast.LENGTH_SHORT).show(); 
 					}
@@ -1629,17 +1632,19 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
 				paintThread.setBubble(xTouch, yTouch);			
 				/** send coordinate  */
 		        /** send message*/
-		        // [Receiver] --> [Sender]
-		        // because there's an 90 degree [clockwise] rotation of the video,
-				// so switch x and y coordinate
-				// (x,y)-->(SurfaceWidthY-y,x)
-		        String coordinateMsgRotation = "PaintView," + Float.toString(mSurface.getHeight() - yTouch*mSurface.getHeight()/mVideoHeight) +","
-		        		+ Float.toString(xTouch*mSurface.getWidth()/mVideoWidth);
-		        mRoom.SendMessage(connection, invitedRoom, coordinateMsgRotation);
-				String coordinateMsg = "PaintView,"
-						+ Float.toString(xTouch) + ","
-						+ Float.toString(yTouch);
-//				mRoom.SendMessage(connection, invitedRoom, coordinateMsg);
+		        // [Receiver] (x,y) {X,Y means screen Width:mSurface.getWidth() and Length:mSurface.getHeight()}--> [Sender]
+				// newX = (X^2 + Y^2 - 2*Y*y)/(2*X)
+				// newY = (x*Y)/X
+				float newX = (mSurface.getWidth()*mSurface.getWidth() + mSurface.getHeight()*mSurface.getHeight() 
+						- 2*mSurface.getHeight()*yTouch) / (2*mSurface.getWidth());
+				float newY = xTouch*mSurface.getHeight()/mSurface.getWidth();
+				String cooMsgRotation = "PaintView," + Float.toString(newX) +","+ Float.toString(newY);
+				mRoom.SendMessage(connection, invitedRoom, cooMsgRotation);
+				 
+//				String coordinateMsgRotation = "PaintView," + Float.toString(mSurface.getHeight() - yTouch*mSurface.getHeight()/mVideoHeight) +","
+//		        		+ Float.toString(xTouch*mSurface.getWidth()/mVideoWidth);
+//		        mRoom.SendMessage(connection, invitedRoom, coordinateMsgRotation);
+
 
 				final String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 				final String coordinate = Float.toString(xTouch) + ","+ Float.toString(yTouch);
@@ -2087,7 +2092,7 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
     		
         	paintThread = new PaintThread(holder);
         	paintThread.setRunning(true);
-            paintThread.start();
+//            paintThread.start();
             
         }
 
@@ -2095,18 +2100,23 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
         public void surfaceDestroyed(SurfaceHolder holder) {
         	if(mLibVLC != null)
                 mLibVLC.detachSubtitlesSurface();
-        	 boolean retry = true;
-        	 paintThread.setRunning(false);
-//             while (retry) {
-               try {
-                 paintThread.join();
-                 retry = false;
-               } catch (InterruptedException e) {
-               }
-//             }
+//        	stopPaintThread();
         }
     };
-    
+	public void stopPaintThread(){
+		boolean retry = true;
+		paintThread.setRunning(false);
+//		while (retry) {
+			try {
+				paintThread.join();
+				Log.i("VideoStreamingFragment3",
+						"paintThread status::"+ paintThread.isAlive());
+				retry = false;
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+//		}
+	}
     /**
      * show overlay the the default timeout
      */

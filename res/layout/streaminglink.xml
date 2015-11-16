@@ -1,54 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="match_parent"
+    android:background="@color/grey2"
     android:orientation="vertical" >
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/streaming_sender"
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="250dp"
-        android:background="@color/white"
-        android:orientation="vertical" >
+        android:layout_height="50dp"
+        android:layout_above="@+id/streaming_link"
+        android:singleLine="true"
+        android:textColor="#FF0000" />
 
-        <TextView
-            android:id="@+id/streaming_sender"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:singleLine="true"
-            android:textColor="#FF0000" />
-
-        <TextView
-            android:id="@+id/streaming_link"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:singleLine="true"
-            android:textColor="#FF0000"
-            android:layout_below="@+id/streaming_sender" />
-    </RelativeLayout>
-
-    <RelativeLayout
+    <TextView
+        android:id="@+id/streaming_link"
         android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_above="@+id/btn_play_streaming"
+        android:singleLine="true"
+        android:textColor="#FF0000" />
+
+    <Button
+        android:id="@+id/btn_play_streaming"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-         android:background="@color/white"
-        android:orientation="vertical" >
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="Play" />
 
-        <Button
-            android:id="@+id/btn_play_streaming"
-            android:layout_width="90dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="Play" />
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Cancel" />
 
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="90dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:text="Cancel"/>
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

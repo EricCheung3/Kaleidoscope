@@ -49,7 +49,9 @@ public class MultiRoom {
 	
 	private static final String serviceName = "conference.myria";
 	private static final int DB_STREAMING_TOUCHINFO = 1;
-	public static final String URl = "http://129.128.184.46/db_insertInfo.php";
+	public static final String touchInfoURl = "http://129.128.184.46/db_insertInfo.php";
+	
+	public static final String streamURl = "http://129.128.184.46/db_streamStore.php";
 
 	
 	private Activity context;
@@ -398,11 +400,47 @@ public class MultiRoom {
 
 	}
 	
+	// save touch information into MySQL 
 	public void saveTouchInfo(String dataObject){
 		
 		Log.i("MultiRoom-->VideoPlayerActivity","Save success!");
 		new MyAsyncTask().execute(dataObject.toString());	
 	}
+	
+	/**use openRTSP tool to store media stream into a file,
+	 * details see: http://www.live555.com/openRTSP
+	 * 
+	 * PATH: file path is current file path of openRTSP
+	 * FileName: -F filename
+	 * 
+	 * @param room
+	 */
+	public void storeMediaStream(String room) {
+		
+		JSONObject streamInfo = new JSONObject();
+		try {
+			// use the room name as file name: room2015_xxxx_xxxx
+
+			
+			/** stream store configuration
+			 *  use openRTSP tool to store streams 
+			 *  -D 3 -B 10000000 -b 10000000 -4 -w 640 -h 480 -f 24 -Q -d 60 -P 300
+			 */
+			String parameter = "./openRTSP -D 3 -B 10000000 -b 10000000 -4 -w 640 -h 480 -f 24 -Q -d 60 -P 300 -F "+room;
+			String url = " rtsp://129.128.184.46:8554/"+room+".sdp";
+			streamInfo.put("parameter", parameter);
+			streamInfo.put("streamUrl", "rtsp://129.128.184.46:8554/"+room+".sdp");
+			
+			streamInfo.put("play", parameter + url);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		new StreamAsyncTask().execute(streamInfo.toString());	
+		
+	}
+	
 	
 	private Handler mHandler = new Handler(){
 		@Override
@@ -419,6 +457,8 @@ public class MultiRoom {
 		}
 	};
 	
+	
+	
 	public class MyAsyncTask extends AsyncTask<String, Integer, Double>{
 		 
 		@Override
@@ -430,7 +470,7 @@ public class MultiRoom {
 		public void postData(String data) {
 			// Create a new HttpClient and Post Header
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost(URl);
+			HttpPost httppost = new HttpPost(touchInfoURl);
 			
 			try {
 				JSONObject dataObject = new JSONObject(data);
@@ -457,6 +497,48 @@ public class MultiRoom {
 //					//
 //				}
 					
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}	
+			
+		}
+ 
+	}
+	
+	public class StreamAsyncTask extends AsyncTask<String, Integer, Double>{
+		 
+		@Override
+		protected Double doInBackground(String... params) {
+			postData(params[0]);
+			return null;
+		}
+ 
+		public void postData(String data) {
+			// Create a new HttpClient and Post Header
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost(streamURl);
+			
+			try {
+				JSONObject streamInfo = new JSONObject(data);
+				
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				params.add(new BasicNameValuePair("parameter", streamInfo.get("parameter").toString()));
+	            params.add(new BasicNameValuePair("streamUrl", streamInfo.get("streamUrl").toString()));
+	            params.add(new BasicNameValuePair("play", streamInfo.get("play").toString()));
+
+	            httppost.setEntity(new UrlEncodedFormEntity(params));
+	            
+				// Execute HTTP Post Request
+				HttpResponse response = httpclient.execute(httppost);
+				String result = EntityUtils.toString(response.getEntity());
+				Log.i("Strore response", result);
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			} catch (UnsupportedEncodingException e) {

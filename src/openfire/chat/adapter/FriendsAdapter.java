@@ -53,8 +53,12 @@ public class FriendsAdapter extends BaseAdapter {
 		TextView displayname = (TextView) view.findViewById(R.id.friend_displayname);
 		CheckBox check = (CheckBox) view.findViewById(R.id.check_box);
 		
-		if(listMap.get(position).get("status").equals("online"))
-			username.setTextColor(Color.GREEN);
+		if(listMap.get(position).get("status").equals("online")){
+			displayname.setTextColor(Color.GREEN);
+			displayname.setText("online");
+		}else
+			displayname.setText("offline");
+			
 
 		username.setText(listMap.get(position).get("username"));
 		//check.setChecked(checked);

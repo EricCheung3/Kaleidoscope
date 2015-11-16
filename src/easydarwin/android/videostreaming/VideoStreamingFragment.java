@@ -132,7 +132,7 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 	/** By default AMRNB is the audio encoder. */
 	public int audioEncoder = SessionBuilder.AUDIO_AMRNB;
 	/** By default H.264 is the video encoder. */
-	public int videoEncoder = SessionBuilder.VIDEO_H263;
+	public int videoEncoder = SessionBuilder.VIDEO_H264;
 	private static final int mOrientation = 0;
 	private Button btnOption;
 	private Button btnSelectContact;
@@ -629,6 +629,8 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 						checkbox.isChecked());
 
 				if (checkbox.isChecked()) {
+					Log.i("----------",friendList.get(position)
+							.get("username"));
 					selectedListMap.add(friendList.get(position)
 							.get("username"));
 
@@ -713,6 +715,9 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 						e.printStackTrace();
 					}
 				}
+				
+				/*** send store video command to server */
+//				mRoom.storeMediaStream(room);
 
 			}
 		});
@@ -779,7 +784,7 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 		int h = faActivity.getWindowManager().getDefaultDisplay().getHeight();
 		int w = faActivity.getWindowManager().getDefaultDisplay().getWidth();
 
-		popStreamingLink = new PopupWindow(v, w - 10, 3 * h / 4);
+		popStreamingLink = new PopupWindow(v, w - 10, 1 * h / 4);
 		popStreamingLink.setAnimationStyle(R.style.MyDialogStyleBottom);
 		popStreamingLink.setFocusable(true);
 		popStreamingLink.setBackgroundDrawable(new BitmapDrawable());
