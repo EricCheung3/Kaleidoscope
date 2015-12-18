@@ -35,6 +35,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/** Login class*/
 public class LoginActivity extends Activity implements OnClickListener {
 
 	public static final int LOGIN_SUCCESS = 1;
@@ -131,6 +132,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		}
 	}
 
+	/**register function, switch to regster interface*/
 	private void register() {
 		sp.edit().putBoolean("firstStart", true);
 		sp.edit().commit();
@@ -139,6 +141,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 		intent = null;
 	}
 
+	/**login function. Start a thread to validate the login.
+	 * You need to call {@link UserServiceImpl#userLogin(String, String)}.
+	 * */
 	private void login() {
 
 		username = inputUsername.getText().toString();
@@ -235,7 +240,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
 	}
 
-	// check network state function
+	/** check network state function*/
 	private void CheckNetworkState() {
 		// /boolean flag = false;
 		ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -251,6 +256,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		showNeworkTips();
 	}
 
+	/**show network tips if disconnected with network*/
 	private void showNeworkTips() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setIcon(android.R.drawable.ic_dialog_alert);

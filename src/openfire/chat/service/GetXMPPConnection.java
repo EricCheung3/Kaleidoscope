@@ -5,6 +5,8 @@ import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Presence;
 
+
+/**[depreciated] See {@link UserService#GetConnection()} for detail.*/
 public class GetXMPPConnection {
 
 	public XMPPConnection connection;

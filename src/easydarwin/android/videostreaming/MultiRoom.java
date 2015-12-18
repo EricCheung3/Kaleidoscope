@@ -42,15 +42,22 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * This a function class, it includes the major functions used in {@link VideoStreamingFragment}
+ * 
+ * */
 public class MultiRoom {
 	
+	/** */
 	private final int PAINTVIEW = 2;
 	private final int MESSAGEVIEW = 3;
-	
+	/** Chat room service in openfire, the format is conference.serverName: 
+	 * In our server, it is named conference.myria*/
 	private static final String serviceName = "conference.myria";
 	private static final int DB_STREAMING_TOUCHINFO = 1;
+	/** URI of touch information storage*/
 	public static final String touchInfoURl = "http://129.128.184.46/db_insertInfo.php";
-	
+	/** URI of streams storage*/
 	public static final String streamURl = "http://129.128.184.46/db_streamStore.php";
 
 	
@@ -58,20 +65,30 @@ public class MultiRoom {
 
 	private String rooom;
 	
-	
+	/** Constructor 
+	 * @param context*/
 	public MultiRoom(Activity context){
 		this.context = context;
 	}
-
+	/** Set method: set the chat-room name
+	 * @param rooom chat-room name*/
 	public void setChatRoom(String rooom){
 		this.rooom = rooom;
 	}
+	/**Get method: get chat-room name
+	 * @return chat-room name*/
 	public String getChatRoom(){
 		return rooom;
 	}
 	
 	
-	/**Create chat room*/
+	/**Create multiple users chat room (no password). You need to call {@link MultiUserChat#create(String)}.
+	 * 
+	 * @param connection XMMP connection
+	 * @param roomName chat-room name
+	 * @return return true if creating room successfully
+	 * @throws XMPPException XMPP connection exception
+	 * */
 	public boolean createMultiUserRoom(XMPPConnection connection,
 			String roomName) throws XMPPException {
 		//check for after videoPlaying back to streamingFragment
@@ -112,7 +129,14 @@ public class MultiRoom {
 		return true;
 	}
 	
-	/**Create chat room with password [room protected]*/
+	/**Create multiple users chat room (with password). You need to call {@link MultiUserChat#create(String)}.
+	 * 
+	 * @param connection XMMP connection
+	 * @param roomName chat-room name
+	 * @param password the password to join the room
+	 * @return return true if creating room successfully
+	 * @throws XMPPException XMPP connection exception
+	 * */
 	public boolean createMultiUserRoom(XMPPConnection connection,
 			String roomName, String password) throws XMPPException {
 		//check for after videoPlaying back to streamingFragment
@@ -158,8 +182,11 @@ public class MultiRoom {
 		return true;
 	}
 	
-	/** Join a chat room by default
-	 * @throws XMPPException */
+	/** Join a chat room by default (no password). You need to call {@link MultiUserChat#join(String)}.
+	 * @param connection XMPP connection
+	 * @param roomName chat-room name
+	 * @return return true if join the chat room successfully
+	 * @throws XMPPException XMPP connection exception*/
 	public boolean joinChatRoom(XMPPConnection connection, String roomName) throws XMPPException {
 		if(connection!=null){
 			// Get the MultiUserChatManager
@@ -175,8 +202,12 @@ public class MultiRoom {
 			return false;
 	}
 	
-	/** Join a chat room with permission [password]
-	 * @throws XMPPException */
+	/** Join a chat room by default (with password). You need to call {@link MultiUserChat#join(String, String)}.
+	 * @param connection XMPP connection
+	 * @param roomName chat-room name
+	 * @param password the password to join the chat-room
+	 * @return return true if join the chat room successfully
+	 * @throws XMPPException XMPP connection exception*/
 	public boolean joinChatRoom(XMPPConnection connection, String roomName, String password) throws XMPPException {
 		if(connection!=null){
 			// Get the MultiUserChatManager
@@ -192,10 +223,15 @@ public class MultiRoom {
 			return false;
 	}
 	
-	/** Get Existing rooms, and rejoin it
+	/** Get Existing rooms, and rejoin it.
+	 * You need to call {@link MultiUserChat#getHostedRooms(org.jivesoftware.smack.Connection, String)}.
 	 * FIXME: you can only join the room that you are allowed.
 	 * 		solution1: when rejoin, send message to owner, and owner make a decision
 	 *      solution2: create chat room with password and give it to friends
+	 * 
+	 * @param connection XMPP connection
+	 * @param serviceName chat room service on openfire server
+	 * @return roomList A list of all the chat-room or null if there's no rooms
 	 * @throws XMPPException */
 	public ArrayList<String> getChatRoomList(XMPPConnection connection, String serviceName) throws XMPPException {
 		
@@ -226,7 +262,12 @@ public class MultiRoom {
 	}
 	
 	
-	/** Invite users to a chat room
+	/** Invite users to a chat room (no password). You need to call {@link MultiUserChat#invite(String, String)}
+	 * 
+	 * @param connection XMMP connection
+	 * @param roomName chat-room name
+	 * @param friendsList the list of selected friends
+	 * @return return true if sending invitation successfully
 	 * @throws XMPPException */
 	public boolean inviteToChatRoom(XMPPConnection connection, String roomName, ArrayList<String> friendsList) throws XMPPException {
 
@@ -246,7 +287,13 @@ public class MultiRoom {
 			return false;
 	}
 	
-	/** Invite users to a chat room with permission [password]
+	/** Invite users to a chat room with a password. You need to call {@link MultiUserChat#invite(String, String)}
+	 * 
+	 * @param connection XMMP connection
+	 * @param roomName chat-room name
+	 * @param friendsList the list of selected friends
+	 * @param password password to join the chat room
+	 * @return return true if sending invitation successfully
 	 * @throws XMPPException */
 	public boolean inviteToChatRoom(XMPPConnection connection, String roomName, ArrayList<String> friendsList, String password) throws XMPPException {
 
@@ -267,7 +314,10 @@ public class MultiRoom {
 	}
 
 	
-	/** ROOM message Listener*/
+	/** Room-message-Listener. 
+	 * 
+	 * @param connection XMPP connection
+	 * @param roomName chat-room name*/
 	public void RoomMsgListenerConnection(XMPPConnection connection, String roomName) {
 
 		if(!connection.isConnected()) {
@@ -347,7 +397,14 @@ public class MultiRoom {
 	}
 	
 
-	/** Add touch annotation*/
+	/** Save touch information into MySQL. 
+	 * You need to start a new thread to save {@link MyAsyncTask}.
+	 * 
+	 * @param connection XMPP connection
+	 * @param room
+	 * @param timestamp
+	 * @param coordinate
+	 * */
 	public void touchAnnotation(final XMPPConnection connection, final String room, final String timestamp, final String coordinate){
 		AlertDialog.Builder tagDialog = new AlertDialog.Builder(context);
 		final EditText input = new EditText(context);
@@ -400,20 +457,21 @@ public class MultiRoom {
 
 	}
 	
-	// save touch information into MySQL 
+	/** [depreciated] Save touch information into MySQL */
 	public void saveTouchInfo(String dataObject){
 		
 		Log.i("MultiRoom-->VideoPlayerActivity","Save success!");
 		new MyAsyncTask().execute(dataObject.toString());	
 	}
 	
-	/**use openRTSP tool to store media stream into a file,
-	 * details see: http://www.live555.com/openRTSP
+	/**Use openRTSP tool to store media stream into a file,
+	 * details see: http://www.live555.com/openRTSP. 
+	 * You need to start a new thread {@link StreamAsyncTask}
 	 * 
 	 * PATH: file path is current file path of openRTSP
 	 * FileName: -F filename
 	 * 
-	 * @param room
+	 * @param room chat-room name
 	 */
 	public void storeMediaStream(String room) {
 		
@@ -458,7 +516,7 @@ public class MultiRoom {
 	};
 	
 	
-	
+	/** Save touch information class thread*/
 	public class MyAsyncTask extends AsyncTask<String, Integer, Double>{
 		 
 		@Override
@@ -511,6 +569,7 @@ public class MultiRoom {
  
 	}
 	
+	/** Save streams class thread*/
 	public class StreamAsyncTask extends AsyncTask<String, Integer, Double>{
 		 
 		@Override
@@ -553,7 +612,12 @@ public class MultiRoom {
  
 	}
 	
-	/**Send message function*/
+	/**Send message function. You need to call {@link MultiUserChat#sendMessage(Message)}.
+	 * 
+	 * @param connection XMPP connection
+	 * @param room chat-room name
+	 * @param textMessage input message
+	 * */
 	public void SendMessage(XMPPConnection connection, String room, String textMessage){
 		
 		//check for after videoPlaying back to streamingFragment
@@ -595,7 +659,12 @@ public class MultiRoom {
 	}
 	
 	
-	/*** send notification */
+	/*** Send notification such "depart or destroy room."
+	 * 
+	 * @param connection XMPP connection
+	 * @param room chat-room name
+	 * @param content content of notification
+	 * */
 	public void SendNotification(XMPPConnection connection, String room, String content){
 
 		MultiUserChat muc = new MultiUserChat(connection, room);  
@@ -613,7 +682,8 @@ public class MultiRoom {
 	}
 	
 	/**stop XMPPconnection
-	 * Do not call it:  */ 
+	 * Do not call it:  
+	 * @param connection XMPP connection*/ 
 	public void stopConnection(XMPPConnection connection){
 		try {
 			if (connection!=null){
@@ -626,6 +696,9 @@ public class MultiRoom {
 		connection = null;
 	}
 	
+	/** user off line
+	 * @param connection XMPP connection
+	 * */
 	public void userOffline(XMPPConnection connection){
 		//check for after videoPlaying back to streamingFragment
 		if(!connection.isConnected()){
@@ -640,7 +713,13 @@ public class MultiRoom {
 	     connection.sendPacket(presence);
 	     Log.i("off-line","off-line");
 	}
-	/** Destroy /leave the chat room*/
+	
+	/** Destroy /leave the chat room. You need to call {@link MultiUserChat#destroy(String, String)}.
+	 * 
+	 * @param connection XMPP connection
+	 * @param room chat-room name
+	 * @return return true, if departing/destroying room successfully
+	 * */
 	public boolean departChatRoom(XMPPConnection connection,String room){  
 		//check for after videoPlaying back to streamingFragment
 		if(!connection.isConnected()){

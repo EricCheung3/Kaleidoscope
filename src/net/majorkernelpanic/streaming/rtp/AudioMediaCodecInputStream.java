@@ -123,7 +123,7 @@ public class AudioMediaCodecInputStream extends MediaCodecInputStream {
 	/**
 	 * us
 	 * 
-	 * @return
+	 * @return movie time
 	 */
 	public long readTs() {
 		return mTS;

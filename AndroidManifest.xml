@@ -3,7 +3,7 @@
     package="org.videolan.vlc"
     android:installLocation="auto"
     android:versionCode="9999"
-    android:versionName="kaleidoscope-v0.9" >
+    android:versionName="kaleidoscope_v0.1.1" >
 
     <uses-sdk
         android:minSdkVersion="7"

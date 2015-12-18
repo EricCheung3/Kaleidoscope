@@ -412,7 +412,7 @@ public class LibVLC {
 
     /**
      * Destroy this libVLC instance
-     * @note You must call it before exiting
+     *  You must call it before exiting
      */
     public void destroy() {
         Log.v(TAG, "Destroying LibVLC instance");
@@ -514,13 +514,13 @@ public class LibVLC {
 
     /**
      * Initialize the libvlc C library
-     * @return a pointer to the libvlc instance
+     * a pointer to the libvlc instance
      */
     private native void nativeInit() throws LibVlcException;
 
     /**
      * Close the libvlc C library
-     * @note mLibVlcInstance should be 0 after a call to destroy()
+     * mLibVlcInstance should be 0 after a call to destroy()
      */
     private native void nativeDestroy();
 
@@ -583,7 +583,7 @@ public class LibVLC {
 
     /**
      * Sets volume as integer
-     * @param volume: Volume level passed as integer
+     * @param volume Volume level passed as integer
      */
     public native int setVolume(int volume);
 
@@ -595,7 +595,7 @@ public class LibVLC {
 
     /**
      * Sets the movie time (in ms), if any media is being played.
-     * @param time: Time in ms.
+     * @param time Time in ms.
      * @return the movie time (in ms), or -1 if there is no media.
      */
     public native long setTime(long time);
@@ -608,7 +608,7 @@ public class LibVLC {
 
     /**
      * Sets the movie position.
-     * @param pos: movie position.
+     * @param pos movie position.
      */
     public native void setPosition(float pos);
 

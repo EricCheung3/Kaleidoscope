@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**Register class*/
 public class RegisterActivity extends Activity {
 
 	public final static int REGISTER_SUCCESS = 1;
@@ -183,6 +184,7 @@ public class RegisterActivity extends Activity {
 	private IHandler handler = new IHandler(this); 
 	
 	
+	/**show message of registered successfully or not*/
 	private void showInfo(String str){		
 		Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
 	}

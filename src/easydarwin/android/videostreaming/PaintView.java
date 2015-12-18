@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Toast;
 
+/**[depreciated] this class was depreciated, see PaintThread class which is in {@link VideoStreamingFragment} for detail.
+ * */
 @SuppressLint("ClickableViewAccessibility")
 public class PaintView extends View implements OnTouchListener {
 
@@ -71,7 +73,8 @@ public class PaintView extends View implements OnTouchListener {
 		}
 		return true;
 	}
-
+	
+	/**Send message*/
 	private void SendMessage(XMPPConnection connection, String room) {
 
 		//check for after videoPlaying back to streamingFragment
@@ -92,7 +95,7 @@ public class PaintView extends View implements OnTouchListener {
 
 	}
 	
-	/*** draw circle on surfaceView */
+	/**touch-annotation-listener: draw circle on surfaceView */
 	private void PAINTViewRoomMsgListener(XMPPConnection connection, String roomName) {
 
 		if(!connection.isConnected()) {

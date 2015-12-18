@@ -68,6 +68,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**[depreciated] See {@link easydarwin.android.videostreaming.VideoStreamingFragment} for detail.*/
 public class ChatMainActivity extends Activity {
 
 	private XMPPConnection connection;

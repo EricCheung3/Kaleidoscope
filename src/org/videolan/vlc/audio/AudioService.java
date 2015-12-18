@@ -207,8 +207,8 @@ public class AudioService extends Service {
 
 
     /**
-     * Set up the remote control and tell the system we want to be the default receiver for the MEDIA buttons
-     * @see http://android-developers.blogspot.fr/2010/06/allowing-applications-to-play-nicer.html
+     * Set up the remote control and tell the system we want to be the default receiver for the MEDIA buttons.
+     * See http://android-developers.blogspot.fr/2010/06/allowing-applications-to-play-nicer.html for detail.
      */
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public void setUpRemoteControlClient() {
@@ -243,7 +243,7 @@ public class AudioService extends Service {
      * A function to control the Remote Control Client. It is needed for
      * compatibility with devices below Ice Cream Sandwich (4.0).
      *
-     * @param p Playback state
+     * @param state Playback state
      */
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void setRemoteControlClientPlaybackState(int state) {

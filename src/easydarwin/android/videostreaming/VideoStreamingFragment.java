@@ -111,6 +111,15 @@ import android.widget.Toast;
 import easydarwin.android.service.EasyCameraApp;
 import easydarwin.android.service.SettingsActivity;
 
+/**
+ * The main class of Kaleidoscope Sender side. 
+ * In order to compatible with libVLC player {@link org.videolan.vlc.gui.video.VideoPlayerActivity}, 
+ * use Fragment to display the main interface.
+ *
+ * @author tiger
+ * @version v0.1.1 Build on Sep 1, 2014
+ * 
+ */
 @SuppressLint("ClickableViewAccessibility")
 public class VideoStreamingFragment extends Fragment implements Callback,
 		RtspClient.Callback, android.view.SurfaceHolder.Callback,
@@ -151,14 +160,15 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 	// private String entries;
 	private List<Map<String, String>> friendList;
 
+	/** XMPP connection*/
 	public static XMPPConnection connection;
 	private String streaminglink = "";
 	private String streaminglinkTag = "";//"rtsp://129.128.184.46:8554/";
 	private String curDateTime;
 
 	/** draw a circle when touch the screen */
-	// private PaintView paintView;
 	private Paint mPaint;
+	/** touch-display thread*/
 	private PaintThread paintThread;
 	
 	private android.view.SurfaceView paintView;
@@ -252,6 +262,7 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 		return v;
 	}
 
+	/** Android init view*/
 	@SuppressWarnings("deprecation")
 	public void initView(View v) {
 
@@ -363,7 +374,12 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 	}
 
 	/**
-	 * start video streaming function
+	 * Start video streaming function: congigure the audio/video settings,
+	 * then You need to call {@link RtspClient#startStream} method to start streaming through RTSP commands.
+	 * 
+	 * @param linkname The format is rtsp://server_ip:port/streaming-name.sdp,
+	 *        streaming-name.sdp is the unique identifier of the media streaming,
+	 *        and also Receivers request the this media streaming also with this unique identifier.
 	 */
 	private void PLAYVideoStreaming(final String linkname) {
 		preferences = PreferenceManager.getDefaultSharedPreferences(faActivity);
@@ -449,7 +465,10 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 		}.execute();
 	}
 
-	/** Invitation Listener */
+	/** Invitation Listener: listening invitation from friends.
+	 * 
+	 * @param connection XMMP connection for each connected peers.
+	 *  */
 	public void InvitationListener(XMPPConnection connection) {
 
 		// check for after videoPlaying back to streamingFragment
@@ -522,7 +541,8 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 					}
 				});
 	}
-
+	
+	/** stop stream, You need to call {@link RtspClient#stopStream() }*/
 	private void stopStream() {
 		if (mClient != null) {
 			mClient.release();
@@ -537,7 +557,7 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 
 	}
 
-	/** Time Thread */
+	/** Time Thread: display the current time*/
 	private class CurrentTimeThread extends Thread {
 		@Override
 		public void run() {
@@ -590,7 +610,16 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 	private FriendsAdapter friendsAdapter;
 	private ArrayList<String> selectedListMap;
 
-	// Select Fiends to Share the video
+	/** Select Fiends to Share the video.
+	 * In this method, it calls {@link MultiRoom#createMultiUserRoom(XMPPConnection, String)} 
+	 * to create a chat room, then opens room-message-listener{@link MultiRoom#RoomMsgListenerConnection(XMPPConnection, String)}
+	 * and touch-annotation-listener{@link #PAINTViewRoomMsgListener(XMPPConnection, String)}.
+	 * 
+	 * Call {@link #PLAYVideoStreaming(String)} to start media streaming and 
+	 * then sends an invitation to selected friends with {@link MultiRoom#inviteToChatRoom(XMPPConnection, String, ArrayList)},
+	 * 
+	 * 
+	 * */
 	@SuppressWarnings("deprecation")
 	private void popupContactList(/* String entries */) {
 
@@ -729,7 +758,12 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 		});
 	}
 
-	/*** draw circle on surfaceView accodring to the coordinate */
+	/** Touch-annotation-listener: draw circle on the screen accodring to the received coordinate,
+	 * this coordinate comes from friends.
+	 * then start a paint thread {@link #paintThread} to draw circle. 
+	 * @param connection XMMP connection with each user
+	 * @param roomName chat room
+	 * */
 	private void PAINTViewRoomMsgListener(XMPPConnection connection,
 			String roomName) {
 
@@ -774,7 +808,16 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 		});
 	}
 
-	// receive video streaming link listener
+	/** Popup received invitation information and parse the inforation to get inviter, subject and streaming link,
+	 * If user accept the invitation, Start a new thread {@link VLCCallbackTask} and
+	 * with the streaming link, call {@link AudioServiceController#load(String, boolean)} method to play (default play as audio).
+	 * 
+	 * @param inviter inviter
+	 * @param message subject of invitation
+	 * 
+	 * 
+	 * 
+	 * */
 	@SuppressWarnings("deprecation")
 	public void popupReceiveStreamingLinkMessage(String inviter, String message) {
 
@@ -831,7 +874,11 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 		});
 	}
 
-	// get all friends
+	/** Retrieve all friends: You need to call {@link XMPPConnection#getRoster()} method which returns a Roster object.
+	 * Then using {@link Roster#getEntries()} method to parse all the friends.
+	 * 
+	 * @param connection XMPP conection
+	 * */
 	private List<Map<String, String>> getAllFriendsUser(
 			XMPPConnection connection) {
 		if (!connection.isConnected()) {
@@ -880,10 +927,7 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 		stopStream();
 	}
 
-	/**
-	 * [solved problem] connection disconnected problem, when back to streaming
-	 * Fragment from VideoPlayer]
-	 * */
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -1062,7 +1106,7 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 	/**
 	 * Configure the provider manager
 	 * 
-	 * @param pm
+	 * @param pm ProviderManager
 	 */
 	public void configureProviderManager(ProviderManager pm) {
 
@@ -1223,7 +1267,9 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 	}
 
 
-	/** Touch Event*/
+	/** Touch Event Callback
+	 * 
+	 * */
 	private final SurfaceHolder.Callback paintViewCallback = new android.view.SurfaceHolder.Callback() {
 		@Override
 		public void surfaceChanged(SurfaceHolder holder, int format, int width,
@@ -1246,16 +1292,20 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 		}
 	};
 
-	/** Paint thread: to draw a circle in a thread*/
-	class PaintThread extends Thread {
+	/** Paint thread: to draw a circle in a new thread*/
+	private class PaintThread extends Thread {
 		private boolean run = false;
+		/** Coordinate of X */
 		private float bubbleX = -100;
+		/** Coordinate of Y*/
 		private float bubbleY = -100;
 
+		/**Constructor*/
 		public PaintThread(SurfaceHolder surfaceHolder) {
 			paintViewHolder = surfaceHolder;
 		}
 
+		/** set the coordinate on the screen*/
 		protected void setBubble(float x, float y) {
 			//[Sender] --> [Receiver]
 			// because there's an 90 degree anti-clockwise rotation of the video,
@@ -1304,6 +1354,7 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 		return paintThread;
 	}
 	
+	/** Stop paint thread */
 	public void stopPaintThread(){
 		boolean retry = true;
 		paintThread.setRunning(false);
@@ -1320,7 +1371,8 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 	}
 	
 	
-	// touch listener
+	/**Touch-listener: draw circle on the screen accodring to touch-point,
+	 * the touch-point comes from user-self.*/
 	private final OnTouchListener paintViewTouchListener = new OnTouchListener() {
 
 		@Override

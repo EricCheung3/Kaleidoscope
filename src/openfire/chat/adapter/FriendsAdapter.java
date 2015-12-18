@@ -15,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+/** Friends adapter. It is used to process/display list of user's friends*/
 public class FriendsAdapter extends BaseAdapter {
 
 //	private static XMPPConnection connection = null;

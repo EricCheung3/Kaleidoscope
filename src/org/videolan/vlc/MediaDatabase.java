@@ -221,7 +221,7 @@ public class MediaDatabase {
 
     /**
      * Get all playlists in the database
-     * @return
+     * @return list of media content
      */
     public String[] getPlaylists() {
         ArrayList<String> playlists = new ArrayList<String>();
@@ -593,7 +593,7 @@ public class MediaDatabase {
 
     /**
      *
-     * @return
+     * @return path of media
      */
     public synchronized List<File> getMediaDirs() {
 

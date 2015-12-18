@@ -258,7 +258,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	 * @param buffer
 	 * @param offset
 	 * @param length
-	 * @return
+	 * @return sum
 	 * @throws IOException
 	 */
 	private int fill(byte[] buffer, int offset, int length) throws IOException {

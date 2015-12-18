@@ -23,11 +23,22 @@ import android.util.Log;
 
 public class UserServiceImpl implements UserService {
 
+	/**your openfire (social interactions) server port */
 	public static final int SERVER_PORT = 5220; //server port
+	/**your openfire (socila interactions) server IP address */
 	public static String SERVER_HOST = "129.128.184.46";// server ip
+	/**your server name*/
 	public static String SERVER_NAME = "myria";// server name
+	/** XMPP connection: to build connection*/
 	private XMPPConnection connection = null;
 	
+	/**user login function. You need to call {@link XMPPConnection#login(String, String)}.
+	 * 
+	 * @param username login user name
+	 * @param password login password
+	 * @return connection XMPP connection
+	 * @throws Exception throw a {@link ServiceException} which extends Exception
+	 * */
 	@Override
 	public XMPPConnection userLogin(String username, String password)
 			throws Exception {
@@ -68,6 +79,16 @@ public class UserServiceImpl implements UserService {
 		return connection;
 	}
 
+	/** user register method, you should call {@link XMPPConnection#createPacketCollector(PacketFilter)} method.
+	 * 
+	 * @param username user name should be unique, not null
+	 * @param name display name (or nick name)
+	 * @param email user's email
+	 * @param password password
+	 * @param confirmPassword confirm password
+	 * @return connection Return an XMPP connection if registered successfully, or null if not.
+	 * @throws Exception throw a {@link ServiceException} which extends Exception
+	 * */
 	public XMPPConnection userRegister(String username, String name, String email, String password,
 			String confirmPassword) throws Exception {
 
@@ -131,6 +152,12 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+	/**Get XMPP connection function. It is used to connect the conection between clients and server
+	 *  You need to call {@link XMPPConnection#connect()}.
+	 *  
+	 * @return connection XMPP connection
+	 * @throws ServiceException Exception which extends Exception
+	 * */
 	public XMPPConnection GetConnection() throws ServiceException{
 
 		XMPPConnection.DEBUG_ENABLED = true;
@@ -153,14 +180,21 @@ public class UserServiceImpl implements UserService {
 		
 		return connection;
 	}
-	/** check validate of username and email */
+	
+	/** check validate of username 
+	 * 
+	 * @param username user name
+	 * @return boolean return true if the username is validated, false if not*/
 	private boolean validteUsername(String username) {
 		String strUser = "^[a-zA-Z]|[0-9]|[a-zA-Z0-9]|[a-zA-Z0-9_]{5,20}";
 		Pattern pUser = Pattern.compile(strUser);
 		Matcher mUser = pUser.matcher(username);
 		return mUser.matches();
 	}
-
+	/** check validate of email 
+	 * 
+	 * @param email user email
+	 * @return boolean return true of the email is validated*/
 	private boolean validteEmail(String email) {
 		String strPattern = "^[a-zA-Z][\\w\\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$";
 		Pattern pEmail = Pattern.compile(strPattern);

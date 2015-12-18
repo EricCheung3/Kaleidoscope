@@ -1558,7 +1558,7 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
 	};
 
     /** Draw point thread */
-	class PaintThread extends Thread {
+	private class PaintThread extends Thread {
 		private boolean run = false;
 		private float bubbleX = -100;
 		private float bubbleY = -100;
