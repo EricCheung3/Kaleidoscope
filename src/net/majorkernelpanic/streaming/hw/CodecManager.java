@@ -56,6 +56,7 @@ public class CodecManager {
 
 	/**
 	 * Lists all encoders that claim to support a color format that we know how to use.
+	 * @param mimeType mime type
 	 * @return A list of those encoders
 	 */
 	@SuppressLint("NewApi")
@@ -104,6 +105,7 @@ public class CodecManager {
 
 	/**
 	 * Lists all decoders that claim to support a color format that we know how to use.
+	 * @param mimeType mime type
 	 * @return A list of those decoders
 	 */
 	@SuppressLint("NewApi")
@@ -157,6 +159,7 @@ public class CodecManager {
 
 		return sDecoders;
 	}
+	
 
 }
 

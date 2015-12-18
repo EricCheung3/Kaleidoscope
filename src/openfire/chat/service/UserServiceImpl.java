@@ -153,7 +153,7 @@ public class UserServiceImpl implements UserService {
 		
 		return connection;
 	}
-	/** check validate of username & email */
+	/** check validate of username and email */
 	private boolean validteUsername(String username) {
 		String strUser = "^[a-zA-Z]|[0-9]|[a-zA-Z0-9]|[a-zA-Z0-9_]{5,20}";
 		Pattern pUser = Pattern.compile(strUser);
