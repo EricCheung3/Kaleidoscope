@@ -20,6 +20,7 @@
 
 package org.videolan.vlc.gui.video;
 
+/**Player activity. Re-design this class to make social interactions work.*/
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -261,12 +262,12 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
     private boolean mHasMenu = false;
     private boolean mIsNavMenu = false;
     
-    /**Send message while video is playing*/
+    /**XMPP connection. Send message while video is playing*/
 	private XMPPConnection connection;
     private EditText textMessage;
     private Button btnSendMessage;
     
-    /** draw a circle when touch the screen */
+    /** draw a circle when touching the screen */
     //[ rewrite the SurfaceView like surface]
 	private SurfaceView paintView;
 	private SurfaceHolder paintViewHolder;
@@ -419,7 +420,7 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
                        
         }
 
-        
+        // touch listener
     	paintView.setOnTouchListener(paintViewTouchListener);
 //    	paintView.setOnClickListener(paintViewClickListener);
         
@@ -518,7 +519,11 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
     }
 
     
-    /**Get XMPP Connection */
+    /**Get XMPP Connection. 
+     * With this connection, users get the chat-room {@link MultiRoom#getChatRoom()},
+     * and join the chat-room {@link MultiRoom#joinChatRoom(XMPPConnection, String)}. 
+     * Then open room-message-listener {@link MultiRoom#RoomMsgListenerConnection(XMPPConnection, String)}
+     * and touch-annotation-listener {@link #PAINTViewRoomMsgListener(XMPPConnection, String)}*/
 	@SuppressWarnings("rawtypes")
 	private class GetXMPPConnection extends AsyncTask {
 		@Override
@@ -566,7 +571,12 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
 		}
 	}	
 
-	/*** draw circle on surfaceView according to the coordinate */
+	/** Touch-annotation-listener: draw circle on the screen accodring to the received coordinate,
+	 * this coordinate comes from friends.
+	 * then start a paint thread {@link #paintThread} to draw circle. 
+	 * @param connection XMMP connection with each user
+	 * @param roomName chat room
+	 * */
 	private void PAINTViewRoomMsgListener(XMPPConnection connection, String roomName) {
 
 		if(!connection.isConnected()) {
@@ -892,9 +902,9 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
         mHandler.sendMessage(msg);
     }
 
-    /**
-     * Lock screen rotation
-     */
+//    /**
+//     * Lock screen rotation
+//     */
 //    private void lockScreen() {
 //        if(mScreenOrientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR) {
 //            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
@@ -925,11 +935,11 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
 //        showOverlay();
 //    }
 
-    /**
-     * Show text in the info view for "duration" milliseconds
-     * @param text
-     * @param duration
-     */
+//    /**
+//     * Show text in the info view for "duration" milliseconds
+//     * @param text
+//     * @param duration
+//     */
 //    private void showInfo(String text, int duration) {
 //        mInfo.setVisibility(View.VISIBLE);
 //        mInfo.setText(text);
@@ -954,17 +964,17 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
 //        mHandler.removeMessages(FADE_OUT_INFO);
 //    }
 
-    /**
-     * hide the info view with "delay" milliseconds delay
-     * @param delay
-     */
+//    /**
+//     * hide the info view with "delay" milliseconds delay
+//     * @param delay
+//     */
 //    private void hideInfo(int delay) {
 //        mHandler.sendEmptyMessageDelayed(FADE_OUT_INFO, delay);
 //    }
 
-    /**
-     * hide the info view
-     */
+//    /**
+//     * hide the info view
+//     */
 //    private void hideInfo() {
 //        hideInfo(0);
 //    }
@@ -1557,16 +1567,19 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
 		}
 	};
 
-    /** Draw point thread */
+	/** Paint thread: to draw a circle in a new thread*/
 	private class PaintThread extends Thread {
 		private boolean run = false;
+		/** Coordinate of X */
 		private float bubbleX = -100;
+		/** Coordinate of Y */
 		private float bubbleY = -100;
 
+		/**Constructor*/
 		public PaintThread(SurfaceHolder surfaceHolder) {
 			paintViewHolder = surfaceHolder;
 		}
-
+		/** set the coordinate on the screen*/
 		protected void setBubble(float x, float y) {
 			bubbleX = x;
 			bubbleY = y;
@@ -1609,8 +1622,8 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
 		return paintThread;
 	}
 	
-	/*** TOUCH EVENT REWRITE IN THIS WAY
-	 * ***/
+	/**Touch-listener: draw circle on the screen accodring to touch-point,
+	 * the touch-point comes from user-self side.*/
 	
     private final OnTouchListener paintViewTouchListener = new OnTouchListener() {
 
@@ -1787,9 +1800,9 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
 //        showInfo(getString(R.string.brightness) + '\u00A0' + Math.round(lp.screenBrightness*15),1000);
 //    }
 
-    /**
-     * handle changes of the seekbar (slicer)
-     */
+//    /**
+//     * handle changes of the seekbar (slicer)
+//     */
 //    private final OnSeekBarChangeListener mSeekListener = new OnSeekBarChangeListener() {
 //
 //        @Override
@@ -1919,9 +1932,9 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
         }
     };
 
-    /**
-    *
-    */
+//    /**
+//    *
+//    */
 //    private final OnClickListener mPlayPauseListener = new OnClickListener() {
 //        @Override
 //        public void onClick(View v) {
@@ -1932,20 +1945,20 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
 //            showOverlay();
 //        }
 //    };
-
-    /**
-    *
-    */
+//
+//    /**
+//    *
+//    */
 //    private final OnClickListener mBackwardListener = new OnClickListener() {
 //        @Override
 //        public void onClick(View v) {
 //            seek(-10000);
 //        }
 //    };
-
-    /**
-    *
-    */
+//
+//    /**
+//    *
+//    */
 //    private final OnClickListener mForwardListener = new OnClickListener() {
 //        @Override
 //        public void onClick(View v) {
@@ -1962,10 +1975,10 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
         mLibVLC.setTime(position);
 //        showOverlay();
     }
-
-    /**
-     *
-     */
+//
+//    /**
+//     *
+//     */
 //    private final OnClickListener mLockListener = new OnClickListener() {
 //
 //        @Override
@@ -1980,9 +1993,9 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
 //        }
 //    };
 
-    /**
-     *
-     */
+//    /**
+//     *
+//     */
 //    private final OnClickListener mSizeListener = new OnClickListener() {
 //
 //        @Override
@@ -2117,16 +2130,16 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
 			}
 //		}
 	}
-    /**
-     * show overlay the the default timeout
-     */
+//    /**
+//     * show overlay the the default timeout
+//     */
 //    private void showOverlay() {
 //        showOverlay(OVERLAY_TIMEOUT);
 //    }
 
-    /**
-     * show overlay
-     */
+//    /**
+//     * show overlay
+//     */
 //    private void showOverlay(int timeout) {
 //        if (mIsNavMenu)
 //            return;
@@ -2152,9 +2165,9 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
 //    }
 
 
-    /**
-     * hider overlay
-     */
+//    /**
+//     * hider overlay
+//     */
 //    private void hideOverlay(boolean fromUser) {
 //        if (mShowing) {
 //            mHandler.removeMessages(SHOW_PROGRESS);
@@ -2279,9 +2292,9 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
     }
 
 
-    /**
-     *
-     */
+//    /**
+//     *
+//     */
 //    private void play() {
 //        mLibVLC.play();
 //        mSurface.setKeepScreenOn(true);

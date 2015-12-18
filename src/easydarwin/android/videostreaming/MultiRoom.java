@@ -43,7 +43,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * This a function class, it includes the major functions used in {@link VideoStreamingFragment}
+ * This is a function class, it includes the major functions used in {@link VideoStreamingFragment} and 
+ * {@link org.videolan.vlc.gui.video.VideoPlayerActivity}.
  * 
  * */
 public class MultiRoom {
