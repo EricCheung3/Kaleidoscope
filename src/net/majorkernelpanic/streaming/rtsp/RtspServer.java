@@ -51,7 +51,7 @@ import android.util.Log;
 /**
  * Implementation of a subset of the RTSP protocol (RFC 2326).
  * 
- * It allows remote control of an android device cameras & microphone.
+ * It allows remote control of an android device cameras and microphone.
  * For each connected client, a Session is instantiated.
  * The Session will start or stop streams according to what the client wants.
  * 
@@ -580,7 +580,7 @@ public class RtspServer extends Service {
 		public String uri;
 		public HashMap<String,String> headers = new HashMap<String,String>();
 
-		/** Parse the method, uri & headers of a RTSP request */
+		/** Parse the method, uri and headers of a RTSP request */
 		public static Request parseRequest(BufferedReader input) throws IOException, IllegalStateException, SocketException {
 			Request request = new Request();
 			String line;

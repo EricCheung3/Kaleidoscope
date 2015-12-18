@@ -42,9 +42,9 @@ import android.util.Log;
 /**
  * 
  * The purpose of this class is to detect and by-pass some bugs (or underspecified configuration) that
- * encoders available through the MediaCodec API may have. <br />
+ * encoders available through the MediaCodec API may have. 
  * Feeding the encoder with a surface is not tested here.
- * Some bugs you may have encountered:<br />
+ * Some bugs you may have encountered:
  * <ul>
  * <li>U and V panes reversed</li>
  * <li>Some padding is needed after the Y pane</li>
@@ -474,7 +474,7 @@ private void debug() {
 
 	/**
 	 * Compares the Y pane of the initial image, and the Y pane
-	 * after having encoded & decoded the image.
+	 * after having encoded and decoded the image.
 	 */
 	private boolean compareLumaPanes() {
 		int d, e, f = 0;
@@ -516,7 +516,7 @@ private void debug() {
 
 	/**
 	 * Compares the U or V pane of the initial image, and the U or V pane
-	 * after having encoded & decoded the image.
+	 * after having encoded and decoded the image.
 	 */	
 	private boolean compareChromaPanes(boolean crossed) {
 		int d, f = 0;
@@ -900,7 +900,7 @@ private void debug() {
 
 	/**
 	 * Makes sure the NAL has a header or not.
-	 * @param withPrefix If set to true, the NAL will be preceeded with 0x00000001.
+	 * @param nal withPrefix If set to true, the NAL will be proceeded with 0x00000001.
 	 */
 	private boolean hasPrefix(byte[] nal) {
 		if (nal[0] == 0 && nal[1] == 0 && nal[2] == 0 && nal[3] == 0x01)

@@ -99,7 +99,6 @@ public class SessionBuilder {
 	/**
 	 * Creates a new {@link Session}.
 	 * @return The new Session
-	 * @throws IOException 
 	 */
 	public Session build() {
 		Session session;

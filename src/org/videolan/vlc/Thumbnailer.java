@@ -105,7 +105,7 @@ public class Thumbnailer implements Runnable {
 
     /**
      * Add a new id of the file browser item to create its thumbnail.
-     * @param id the if of the file browser item.
+     * @param item the if of the file browser item.
      */
     public void addJob(Media item) {
         if(BitmapUtil.getPictureFromCache(item) != null || item.isPictureParsed())

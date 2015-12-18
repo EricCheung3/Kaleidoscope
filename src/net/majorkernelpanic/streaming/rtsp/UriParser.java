@@ -55,9 +55,7 @@ public class UriParser {
 	/**
 	 * Configures a Session according to the given URI.
 	 * Here are some examples of URIs that can be used to configure a Session:
-	 * <ul><li>rtsp://xxx.xxx.xxx.xxx:8086?h264&flash=on</li>
-	 * <li>rtsp://xxx.xxx.xxx.xxx:8086?h263&camera=front&flash=on</li>
-	 * <li>rtsp://xxx.xxx.xxx.xxx:8086?h264=200-20-320-240</li>
+	 * <ul><li>rtsp://xxx.xxx.xxx.xxx:8086?h264=200-20-320-240</li>
 	 * <li>rtsp://xxx.xxx.xxx.xxx:8086?aac</li></ul>
 	 * @param uri The URI
 	 * @throws IllegalStateException

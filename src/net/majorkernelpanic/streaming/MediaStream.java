@@ -168,7 +168,7 @@ public abstract class MediaStream implements Stream {
 	 * 
 	 * @param ttl
 	 *            The time to live
-	 * @throws IOException
+	 * @throws IOException IO exception
 	 */
 	@Override
 	public void setTimeToLive(int ttl) throws IOException {
@@ -197,15 +197,15 @@ public abstract class MediaStream implements Stream {
 	 * Sets the streaming method that will be used.
 	 * 
 	 * If the mode is set to {@link #MODE_MEDIARECORDER_API}, raw audio/video
-	 * will be encoded using the MediaRecorder API. <br />
+	 * will be encoded using the MediaRecorder API.   
 	 * 
 	 * If the mode is set to {@link #MODE_MEDIACODEC_API} or to
 	 * {@link #MODE_MEDIACODEC_API_2}, audio/video will be encoded with using
-	 * the MediaCodec. <br />
+	 * the MediaCodec.   
 	 * 
 	 * The {@link #MODE_MEDIACODEC_API_2} mode only concerns {@link VideoStream}
 	 * , it makes use of the createInputSurface() method of the MediaCodec API
-	 * (Android 4.3 is needed there). <br />
+	 * (Android 4.3 is needed there).   
 	 * 
 	 * @param mode
 	 *            Can be {@link #MODE_MEDIARECORDER_API},

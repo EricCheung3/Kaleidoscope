@@ -244,7 +244,7 @@ public class MediaDatabase {
     /**
      * Add new playlist
      * @param name
-     * @return id of the new playlist
+     * 
      */
     public void addPlaylist(String name) {
         ContentValues values = new ContentValues();

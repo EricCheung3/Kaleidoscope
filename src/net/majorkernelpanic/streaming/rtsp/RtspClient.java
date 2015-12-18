@@ -754,7 +754,7 @@ public class RtspClient {
 		public int status;
 		public HashMap<String, String> headers = new HashMap<String, String>();
 
-		/** Parse the method, uri & headers of a RTSP request */
+		/** Parse the method, uri and headers of a RTSP request */
 		public static Response parseResponse(BufferedReader input) throws IOException, IllegalStateException, SocketException {
 			Response response = new Response();
 			String line;

@@ -206,7 +206,6 @@ public class Media implements Comparable<Media> {
      * hard-coded dependency gracefully for 3rd party libvlc apps while still
      * maintaining good l10n in VLC for Android.
      *
-     * @see org.videolan.vlc.util.Util#getValue(String, int)
      *
      * @param string The default string
      * @param type Alias for R.string.xxx
@@ -325,7 +324,6 @@ public class Media implements Comparable<Media> {
      * Returns the raw picture object. Likely to be NULL in VLC for Android
      * due to lazy-loading.
      *
-     * Use {@link org.videolan.vlc.util.Bitmap#getPictureFromCache(Media)} instead.
      *
      * @return The raw picture or NULL
      */
