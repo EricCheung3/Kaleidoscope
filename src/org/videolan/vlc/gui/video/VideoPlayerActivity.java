@@ -1656,7 +1656,8 @@ public class VideoPlayerActivity extends Activity implements IVideoPlayer {
 				final EditText input = new EditText(VideoPlayerActivity.this);
 
 				input.setHint("tag some annotation...");
-				tagDialog.setTitle(R.string.TAG_title).setView(input);
+//				tagDialog.setTitle(R.string.TAG_title).setView(input);
+				tagDialog.setView(input);
 				
 				tagDialog.setPositiveButton(R.string.TAG_send,
 					new DialogInterface.OnClickListener() {

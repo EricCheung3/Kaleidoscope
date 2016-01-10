@@ -42,34 +42,32 @@
 
 	 </FrameLayout>
 
-        <RelativeLayout
+         <RelativeLayout
             android:id="@+id/linear2"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
-            android:background="@android:color/transparent"
+            android:background="@color/grey2"
             android:orientation="vertical" >
 
             <EditText
                 android:id="@+id/edit_say_something"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_alignParentBottom="false"
+                android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/btn_send_message"
-                android:hint="say something..."
                 android:imeOptions="actionSend"
                 android:inputType="textAutoCorrect" />
 
             <Button
                 android:id="@+id/btn_send_message"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_alignParentBottom="false"
+                android:layout_height="50dp"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
                 android:text="send" />
         </RelativeLayout>
-
-    
+        
 
 </RelativeLayout>

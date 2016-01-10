@@ -646,6 +646,7 @@ public class VideoStreamingFragment extends Fragment implements Callback,
 				
 				// generate a chat room according current time
 				room = "room" + curDateTime;
+				room = "roomlive";// for evaluation
 				mRoom.setChatRoom(room);
 				Log.i("MULTIROOM-ROOM", room);
 		

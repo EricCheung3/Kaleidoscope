@@ -49,10 +49,13 @@ public class MultiRoom {
 	
 	private static final String serviceName = "conference.myria";
 	private static final int DB_STREAMING_TOUCHINFO = 1;
-	public static final String touchInfoURl = "http://129.128.184.46/db_insertInfo.php";
 	
+	/** NOTE: These valuse should be changed according to your own Server IP*/
+	public static final String touchInfoURl = "http://129.128.184.46/db_insertInfo.php";
 	public static final String streamURl = "http://129.128.184.46/db_streamStore.php";
-
+	public static final String serverURl = "http://129.128.184.46:8554/";
+	
+	
 	
 	private Activity context;
 
@@ -427,11 +430,11 @@ public class MultiRoom {
 			 *  -D 3 -B 10000000 -b 10000000 -4 -w 640 -h 480 -f 24 -Q -d 60 -P 300
 			 */
 			String parameter = "./openRTSP -D 3 -B 10000000 -b 10000000 -4 -w 640 -h 480 -f 24 -Q -d 60 -P 300 -F "+room;
-			String url = " rtsp://129.128.184.46:8554/"+room+".sdp";
+			String url = serverURl+room+".sdp";
 			streamInfo.put("parameter", parameter);
-			streamInfo.put("streamUrl", "rtsp://129.128.184.46:8554/"+room+".sdp");
+			streamInfo.put("streamUrl", url);
 			
-			streamInfo.put("play", parameter + url);
+			streamInfo.put("play", parameter + " " +url);
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
