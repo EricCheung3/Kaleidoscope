@@ -1,7 +1,6 @@
-# Kaleidoscope README #
+# Kaleidoscope #
 In this project, we develop  a platform for multimedia streaming on mobile devices, enhanced with textual and touch-display interactions for a rich user experience. Users (senders) can use our Kaleidoscope mobile application to setup a streaming channel on the platform server, and invite their contacts (receivers) to share their real-time video recordings. At the Sender site, the Kaleidoscope app captures the video and shares it with the streaming server. At the Receiver site, the Kaleidoscope app replays the video. At both sites, users can send text messages to the connected peers and touch the display to point out interesting video scenes; the Kaleidoscope app shares these interactions with the whole set of peers. The data (audio/video, text, touch events) will be stored on the cloud server with timestamps to support feature extraction and analytics services on the cloud. 
 
-The latest code is on Github: <https://github.com/EricCheung3/Kaleidoscope>.
 
 ### Open-source Components and Library ###
 
@@ -28,7 +27,7 @@ The latest code is on Github: <https://github.com/EricCheung3/Kaleidoscope>.
 
 * Deployment instructions
 
-More details on [WiKi document](https://bitbucket.org/EricCHeung-admin/kaleidoscope/wiki/browse/)
+More details on [WiKi document](https://github.com/EricCheung3/Kaleidoscope/wiki)
 
 ### Question Contact ###
 
